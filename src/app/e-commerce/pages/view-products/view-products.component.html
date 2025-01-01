@@ -1,0 +1,54 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda IDWM</title>
+    <link rel="stylesheet" href="view-products.component.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Tienda IDWM</div>
+            <input type="text" placeholder="Buscar productos">
+            <div class="header-buttons">
+                <button class="btn-iniciar-sesion">Iniciar sesión</button>
+                <button>🛒</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <aside class="filtros">
+            <h3>Filtros</h3>
+            <label for="tipo">Tipo</label>
+            <select id="tipo">
+                <option value="">Seleccionar</option>
+            </select>
+
+            <label for="ordenar">Ordenar</label>
+            <select id="ordenar">
+                <option value="">Seleccionar</option>
+            </select>
+        </aside>
+
+        <section class="productos">
+            <div *ngIf="productos.length === 0">
+                <p>No hay productos disponibles</p>
+            </div>
+        
+            <div class="productos-grid">
+                <div *ngFor="let producto of productos" class="producto">
+                    <p>{{ producto.nombre }}</p>
+                    <p>{{ producto.precio | currency:'CLP' }}</p>
+                </div>
+            </div>
+        
+            <div class="paginacion">
+                <button (click)="paginaAnterior()">Anterior</button>
+                <button (click)="paginaSiguiente()">Siguiente</button>
+            </div>
+        </section>
+        
+    </main>
+
+ 
+</body>
