@@ -1,51 +1,55 @@
-<head>
+<head >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda IDWM</title>
     <link rel="stylesheet" href="view-products.component.css">
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <div class="logo">Tienda IDWM</div>
-            <input type="text" placeholder="Buscar productos">
-            <div class="header-buttons">
-                <button class="btn-iniciar-sesion">Iniciar sesión</button>
-                <button>🛒</button>
-            </div>
+    <app-navbar>        
+            <app-search-bar (notifyParent)="setSearch($event)"></app-search-bar>
+        
+        <div class="header-buttons">
+
+            <button class="btn-iniciar-sesion">Iniciar sesión</button>
+            <button>🛒</button>
         </div>
-    </header>
+    </app-navbar>
 
     <main>
         <aside class="filtros">
             <h3>Filtros</h3>
             <label for="tipo">Tipo</label>
             <select id="tipo">
-                <option value="">Seleccionar</option>
+                <option value="">Nada</option>
+                <option value="">Poleras</option>
+                <option value="">Gorros</option>
+                <option value="">Jugueteria</option>
+                <option value="">Alimentacion</option>
+                <option value="">Libros</option>
             </select>
-
+        
             <label for="ordenar">Ordenar</label>
             <select id="ordenar">
-                <option value="">Seleccionar</option>
+                <option value="">Ascendente</option>
+                <option value="">Descendente</option>
             </select>
         </aside>
 
         <section class="productos">
-            <div *ngIf="productos.length === 0">
+            <div *ngIf="products.length === 0">
                 <p>No hay productos disponibles</p>
             </div>
         
             <div class="productos-grid">
-                <div *ngFor="let producto of productos" class="producto">
-                    <p>{{ producto.nombre }}</p>
-                    <p>{{ producto.precio | currency:'CLP' }}</p>
+                <div *ngFor="let producto of products" class="producto">
+                    <p>{{ producto.imageUrl }}</p>
+                    <p>{{ producto.name }}</p>
+                    <p>{{ producto.price | currency:'CLP' }}</p>
                 </div>
             </div>
-        
-            <div class="paginacion">
-                <button (click)="paginaAnterior()">Anterior</button>
-                <button (click)="paginaSiguiente()">Siguiente</button>
-            </div>
+        <app-change-page-buttons (notifyParent) = "setNewPage($event)" [maxPage]="maxPage" [buttonNextDisabled] = "buttonNextDisabled" [buttonPreviousDisabled] = "buttonPreviousDisabled"></app-change-page-buttons>
+
         </section>
         
     </main>
