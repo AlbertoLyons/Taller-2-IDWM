@@ -1,0 +1,118 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #668cff;
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.container {
+  width: 90%;
+  max-width: 700px;
+  background-color: #f4f4f4;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.title-box {
+  background-color: #668cff;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  margin: 0;
+  color: #000;
+  font-size: 36px;
+}
+
+h2 {
+  margin: 20px 0;
+  color: #000;
+  font-size: 28px;
+}
+
+label {
+  display: block;
+  margin: 15px 0 10px;
+  color: #000;
+  font-size: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+button {
+  background-color: #668cff;
+  color: white;
+  border: none;
+  padding: 20px 0;
+  width: 100%;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #557be3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.register-link {
+  display: block;
+  margin: 50px 0;
+  color: #668cff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+p, span, a:not(.register-link), h2, label, input, button {
+  color: #000;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.loading-spinner {
+  display: inline-block;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #668cff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+      transform: rotate(360deg);
+  }
+}
