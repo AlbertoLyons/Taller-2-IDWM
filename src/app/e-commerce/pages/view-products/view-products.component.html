@@ -11,7 +11,9 @@
         
         <div class="header-buttons">
 
-            <button class="btn-iniciar-sesion">Iniciar sesión</button>
+            <button class="btn-iniciar-sesion" (click)="navigateTo('iniciarSesion')">Iniciar sesión</button>
+
+
             <button>🛒</button>
         </div>
     </app-navbar>
@@ -20,14 +22,16 @@
         <aside class="filtros">
             <h3>Filtros</h3>
             <label for="tipo">Tipo</label>
-            <select id="tipo">
-                <option value="">Nada</option>
-                <option value="">Poleras</option>
-                <option value="">Gorros</option>
-                <option value="">Jugueteria</option>
-                <option value="">Alimentacion</option>
-                <option value="">Libros</option>
+            <select id="tipo" [(ngModel)]="type">
+              <option value="">Nada</option>
+              <option value="poleras">Poleras</option>
+              <option value="gorros">Gorros</option>
+              <option value="jugueteria">Juguetería</option>
+              <option value="alimentacion">Alimentación</option>
+              <option value="libros">Libros</option>
             </select>
+            <p>Seleccionado: {{ type }}</p>
+            
         
             <label for="ordenar">Ordenar</label>
             <select id="ordenar">

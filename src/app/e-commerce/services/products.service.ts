@@ -14,9 +14,9 @@ export class ProductServices {
 
   public errors: string[] = []; 
 
-  async getProductsUsers(AscOrDesc:string, pageNumber: number): Promise<Product[]> {
+  async getProductsUsers(AscOrDesc:string, type:string, pageNumber: number): Promise<Product[]> {
     try{
-      const params = new HttpParams().set('AscOrDesc', AscOrDesc).set("pageNumber", pageNumber);
+      const params = new HttpParams().set('AscOrDesc', AscOrDesc).set("pageNumber", pageNumber).set("type", "Nada");
       const response = await firstValueFrom(this.http.get<ResponseAPIGetAllProducts>(`${this.baseUrl}/GetAll`, {params}));
       return Promise.resolve(response.products);
     }catch(error){
@@ -28,7 +28,7 @@ export class ProductServices {
   }
   async getMaxPage(): Promise<number> {
     try{
-      const params = new HttpParams().set('AscOrDesc', "asc").set("pageNumber", 1);
+      const params = new HttpParams().set('AscOrDesc', "asc").set("pageNumber", 1).set("type", "Nada");
       const response = await firstValueFrom(this.http.get<ResponseAPIGetAllProducts>(`${this.baseUrl}/GetAll`, {params}));
       return Promise.resolve(response.totalPages);
     }catch(error){
