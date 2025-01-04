@@ -1,0 +1,82 @@
+<head >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda IDWM</title>
+    <link rel="stylesheet" href="view-products.component.css">
+</head>
+<body>
+    <app-navbar>        
+            <app-search-bar (notifyParent)="setSearch($event)"></app-search-bar>
+        
+        <div class="header-buttons">
+
+            <button class="btn-iniciar-sesion" (click)="navigateTo('iniciarSesion')">Iniciar sesión</button>
+
+
+            <a href="cart"><button>🛒</button></a>
+        </div>
+    </app-navbar>
+
+    <main>
+        <aside class="filtros">
+            <h3>Filtros</h3>
+            <label for="tipo">Tipo</label>
+            <select id="tipo" [(ngModel)]="type">
+              <option value="Nada">Nada</option>
+              <option value="Poleras">Poleras</option>
+              <option value="Gorros">Gorros</option>
+              <option value="Jugueteria">Juguetería</option>
+              <option value="Alimentacion">Alimentación</option>
+              <option value="Libros">Libros</option>
+            </select>
+            
+        
+            <label for="AscOrDesc">Ordenar</label>
+            <select id="AscOrDesc" [(ngModel)]="AscOrDesc">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+            <button class="btn-aplicar-filtros" (click)="applyFilters()">Aplicar Filtros</button>
+        </aside>
+
+        <section class="productos">
+            <div *ngIf="products.length === 0">
+                <p>No hay productos disponibles</p>
+            </div>
+        
+                <div *ngIf="products.length === 0">
+                    <p>No hay productos disponibles</p>
+                </div>
+            
+                <!-- Contenedor de la grilla de productos -->
+                <div class="productos-grid">
+                    <div *ngFor="let producto of products" class="producto" track product.imageUrl>
+                        <p><img class="rounded-t-lg" src="{{ producto.imageUrl }}" alt="" /></p>
+                        <p>{{ producto.name }}</p>
+                        <p>{{ producto.price | currency:'CLP' }}</p>
+                        
+                        <!-- Botón agregar al carrito dentro de cada tarjeta -->
+                        <button class="boton-agregar" (click)="agregarAlCarrito(producto.id)">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            
+            
+        
+
+        
+            <app-change-page-buttons (notifyParent)="setNewPage($event)" 
+                [maxPage]="maxPage" 
+                [buttonNextDisabled]="buttonNextDisabled" 
+                [buttonPreviousDisabled]="buttonPreviousDisabled">
+            </app-change-page-buttons>
+        </section>
+        
+
+        
+    </main>
+
+ 
+</body>
