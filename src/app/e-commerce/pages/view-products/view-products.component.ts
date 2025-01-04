@@ -8,6 +8,7 @@ import { SearchBarComponent } from '../../components/search-bar/search-bar.compo
 import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-view-products',
@@ -17,23 +18,20 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './view-products.component.css'
 })
 export class ViewProductsComponent {
-
-
-
  
   private productServices: ProductServices = inject(ProductServices);
   products: Product[] = [];
   actualPage: number = 1;
-  order: string = "asc";
+  AscOrDesc: string = "asc";
   type: string = "Nada";
-  
+  search: string = "";
   pageChange = output<number>();
   maxPage: number = 0;
   buttonNextDisabled: boolean = false;
   buttonPreviousDisabled: boolean = true;
 
-  constructor(private router: Router) {
-    this.getAllProductUsers(this.order, this.type, this.actualPage);
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+    this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
     this.getMaxPage();
   }
   async getMaxPage(){
@@ -43,13 +41,19 @@ export class ViewProductsComponent {
       return 0;
     }) || 0;
   }
-  async getAllProductUsers(AscOrDesc:string, type : string, page: number) {
-    this.products = await this.productServices.getProductsUsers(AscOrDesc, type,  page)
+  async getAllProductUsers(AscOrDesc:string, type : string, page: number, search: string){ {
+    console.log(this.type);
+    console.log(this.actualPage);
+    console.log(this.AscOrDesc);
+    console.log(this.search);
+    this.products = await this.productServices.getProductsUsers(AscOrDesc, type, search, page)
     .catch((error) => {
       console.log(error);
       return [];
     }) || [];
-  }
+    console.log(this.products);
+
+  }}
   setNewPage(page: number) {
     if (page === 1) {
       this.buttonPreviousDisabled = true;
@@ -61,13 +65,26 @@ export class ViewProductsComponent {
     } else {
       this.buttonNextDisabled = false;
     }
+    
     this.pageChange.emit(page);
-    this.getAllProductUsers(this.order, this.type, page);
+    this.actualPage = page;
+    this.getAllProductUsers(this.AscOrDesc, this.type, page, this.search);
     }
-    setSearch($event: Event) {
-      throw new Error('Method not implemented.');
+    setSearch(search: string) {
+    this.search = search;
+
+      this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
       }
   navigateTo(route: string): void {
     this.router.navigate([route]);
+  }
+  async applyFilters() {
+    this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+    this.cdr.markForCheck();
+    }
+    agregarAlCarrito(id: number) {
+      console.log(`Producto con ID ${id} agregado al carrito`);
+      // Aquí puedes agregar la lógica para añadir el producto al carrito, por ejemplo:
+      // this.cartService.addToCart(id);
   }
 }

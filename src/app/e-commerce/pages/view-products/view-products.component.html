@@ -14,7 +14,7 @@
             <button class="btn-iniciar-sesion" (click)="navigateTo('iniciarSesion')">Iniciar sesión</button>
 
 
-            <button>🛒</button>
+            <a href="cart"><button>🛒</button></a>
         </div>
     </app-navbar>
 
@@ -23,21 +23,21 @@
             <h3>Filtros</h3>
             <label for="tipo">Tipo</label>
             <select id="tipo" [(ngModel)]="type">
-              <option value="">Nada</option>
-              <option value="poleras">Poleras</option>
-              <option value="gorros">Gorros</option>
-              <option value="jugueteria">Juguetería</option>
-              <option value="alimentacion">Alimentación</option>
-              <option value="libros">Libros</option>
+              <option value="Nada">Nada</option>
+              <option value="Poleras">Poleras</option>
+              <option value="Gorros">Gorros</option>
+              <option value="Jugueteria">Juguetería</option>
+              <option value="Alimentacion">Alimentación</option>
+              <option value="Libros">Libros</option>
             </select>
-            <p>Seleccionado: {{ type }}</p>
             
         
-            <label for="ordenar">Ordenar</label>
-            <select id="ordenar">
-                <option value="">Ascendente</option>
-                <option value="">Descendente</option>
+            <label for="AscOrDesc">Ordenar</label>
+            <select id="AscOrDesc" [(ngModel)]="AscOrDesc">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
             </select>
+            <button class="btn-aplicar-filtros" (click)="applyFilters()">Aplicar Filtros</button>
         </aside>
 
         <section class="productos">
@@ -45,16 +45,36 @@
                 <p>No hay productos disponibles</p>
             </div>
         
-            <div class="productos-grid">
-                <div *ngFor="let producto of products" class="producto">
-                    <p>{{ producto.imageUrl }}</p>
-                    <p>{{ producto.name }}</p>
-                    <p>{{ producto.price | currency:'CLP' }}</p>
+                <div *ngIf="products.length === 0">
+                    <p>No hay productos disponibles</p>
                 </div>
-            </div>
-        <app-change-page-buttons (notifyParent) = "setNewPage($event)" [maxPage]="maxPage" [buttonNextDisabled] = "buttonNextDisabled" [buttonPreviousDisabled] = "buttonPreviousDisabled"></app-change-page-buttons>
+            
+                <!-- Contenedor de la grilla de productos -->
+                <div class="productos-grid">
+                    <div *ngFor="let producto of products" class="producto" track product.imageUrl>
+                        <p><img class="rounded-t-lg" src="{{ producto.imageUrl }}" alt="" /></p>
+                        <p>{{ producto.name }}</p>
+                        <p>{{ producto.price | currency:'CLP' }}</p>
+                        
+                        <!-- Botón agregar al carrito dentro de cada tarjeta -->
+                        <button class="boton-agregar" (click)="agregarAlCarrito(producto.id)">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+            
+            
+        
 
+        
+            <app-change-page-buttons (notifyParent)="setNewPage($event)" 
+                [maxPage]="maxPage" 
+                [buttonNextDisabled]="buttonNextDisabled" 
+                [buttonPreviousDisabled]="buttonPreviousDisabled">
+            </app-change-page-buttons>
         </section>
+        
+
         
     </main>
 
