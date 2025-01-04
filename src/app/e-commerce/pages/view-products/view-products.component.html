@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="view-products.component.css">
 </head>
 <body>
-    <app-navbar>        
+    <app-navbar>
             <app-search-bar (notifyParent)="setSearch($event)"></app-search-bar>
-        
+
         <div class="header-buttons">
 
             <button class="btn-iniciar-sesion" (click)="navigateTo('iniciarSesion')">Iniciar sesión</button>
@@ -31,8 +31,8 @@
               <option value="libros">Libros</option>
             </select>
             <p>Seleccionado: {{ type }}</p>
-            
-        
+
+
             <label for="ordenar">Ordenar</label>
             <select id="ordenar">
                 <option value="">Ascendente</option>
@@ -44,10 +44,10 @@
             <div *ngIf="products.length === 0">
                 <p>No hay productos disponibles</p>
             </div>
-        
+
             <div class="productos-grid">
                 <div *ngFor="let producto of products" class="producto">
-                    <p>{{ producto.imageUrl }}</p>
+                    <p><img class="rounded-t-lg" src={{producto.imageUrl}} alt="" /></p>
                     <p>{{ producto.name }}</p>
                     <p>{{ producto.price | currency:'CLP' }}</p>
                 </div>
@@ -55,8 +55,8 @@
         <app-change-page-buttons (notifyParent) = "setNewPage($event)" [maxPage]="maxPage" [buttonNextDisabled] = "buttonNextDisabled" [buttonPreviousDisabled] = "buttonPreviousDisabled"></app-change-page-buttons>
 
         </section>
-        
+
     </main>
 
- 
+
 </body>
