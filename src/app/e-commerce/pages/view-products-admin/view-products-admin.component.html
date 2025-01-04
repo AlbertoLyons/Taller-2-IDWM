@@ -1,1 +1,25 @@
-<p>view-products-admin works!</p>
+<body>
+  <app-navbar>
+    <!-- Search Bar centrado -->
+    <div class="flex-1 flex justify-center">
+      <app-search-bar></app-search-bar>
+    </div>
+
+    <!-- Botones alineados a la derecha -->
+    <div class="flex items-right space-x-4">
+      <button class="btn-iniciar-sesion">
+        Iniciar sesión
+      </button>
+      <button class="btn-iniciar-sesion">
+        Boletas
+      </button>
+    </div>
+  </app-navbar>
+
+  <section class="productos">
+
+
+    <app-change-page-buttons (notifyParent) = "setNewPage($event)" [maxPage]="maxPage" [buttonNextDisabled] = "buttonNextDisabled" [buttonPreviousDisabled] = "buttonPreviousDisabled"></app-change-page-buttons>
+  </section>
+
+</body>
