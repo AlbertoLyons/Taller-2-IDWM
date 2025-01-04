@@ -31,8 +31,8 @@ export class ViewProductsAdminComponent {
 
   pageChange = output<number>();
   maxPage: number = 0;
-  buttonNextDisabled: boolean = true;
-  buttonPreviousDisabled: boolean = false;
+  buttonNextDisabled: boolean = false;
+  buttonPreviousDisabled: boolean = true;
 
   constructor(private router: Router) {
     this.getAllProductUsers(this.order, this.type, this.actualPage);

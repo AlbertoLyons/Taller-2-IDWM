@@ -17,3 +17,11 @@ section.productos {
   padding: 20px;
   background-color: #6366F1;
 }
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 100px;
+  flex-grow: 1;
+  margin: auto;
+  min-height: 100vh;
+}

@@ -16,9 +16,14 @@
     </div>
   </app-navbar>
 
-  <section class="productos">
-
-
+  <section class="productos" >
+    <div class="productos-grid">
+      <div *ngFor="let producto of products" class="producto">
+          <img src={{producto.imageUrl}} alt="">
+          <p>{{ producto.name }}</p>
+          <p>{{ producto.price | currency:'CLP ' }}</p>
+      </div>
+  </div>
     <app-change-page-buttons (notifyParent) = "setNewPage($event)" [maxPage]="maxPage" [buttonNextDisabled] = "buttonNextDisabled" [buttonPreviousDisabled] = "buttonPreviousDisabled"></app-change-page-buttons>
   </section>
 
