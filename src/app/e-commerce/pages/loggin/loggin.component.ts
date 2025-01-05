@@ -83,7 +83,6 @@ export class LogginComponent {
       return regex.test(control.value) ? null : { alphanumeric: true };
     };
   }
-
   protected getFieldError(fieldName: keyof LogginDto): string {
     const control = this.loginForm.get(fieldName);
 
