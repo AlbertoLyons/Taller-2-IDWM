@@ -19,7 +19,7 @@ export const routes: Routes = [
     {
         path: 'register',
         pathMatch: 'full',
-        loadComponent: () => import('./e-commerce/pages/register/register-form.component').then( m => m.RegisterFormComponent)
+        loadComponent: () => import('./e-commerce/pages/register/register.component').then( m => m.RegisterComponent)
     },
     {
         path: 'cart',
