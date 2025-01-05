@@ -70,4 +70,9 @@ export class ViewProductsAdminComponent {
     this.pageChange.emit(page);
     this.getAllProductUsers(this.order, this.type, this.search, page);
   }
+
+  setSearch(search: string) {
+    this.search = search;
+    this.getAllProductUsers(this.order, this.type,  this.search, this.actualPage);
+  }
 }

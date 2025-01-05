@@ -1,11 +1,9 @@
 <body>
   <app-navbar>
-    <!-- Search Bar centrado -->
     <div class="flex-1 flex justify-center">
-      <app-search-bar></app-search-bar>
+      <app-search-bar (notifyParent)="setSearch($event)"></app-search-bar>
     </div>
 
-    <!-- Botones alineados a la derecha -->
     <div class="flex items-right space-x-4">
       <button class="btn-iniciar-sesion">
         Iniciar sesión
@@ -22,7 +20,7 @@
         <img class="rounded-t-lg" src="{{ producto.imageUrl }}" alt="{{ producto.name }}" onerror="this.src='images (1).png'"/>
           <p class="text-center">{{ producto.name }}</p>
           <p class="text-center">{{ producto.price | currency:'CLP ' }}</p>
-          
+
       </div>
   </div>
     <app-change-page-buttons (notifyParent) = "setNewPage($event)" [maxPage]="maxPage" [buttonNextDisabled] = "buttonNextDisabled" [buttonPreviousDisabled] = "buttonPreviousDisabled"></app-change-page-buttons>

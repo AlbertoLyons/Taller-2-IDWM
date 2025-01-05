@@ -25,3 +25,21 @@ section.productos {
   margin: auto;
   min-height: 100vh;
 }
+.producto {
+  background-color: white;
+  padding: 10px; /* Reduce el padding interno */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px; /* Espaciado reducido entre elementos internos */
+  width: fit-content; /* Ajusta el ancho al contenido */
+  max-width: 100%; /* Evita que se expanda más allá del contenedor padre */
+  margin: auto; /* Centra el contenedor si es necesario */
+}
+app-search-bar {
+    display: block;
+    margin: 0 auto;
+    width: 40%;  /* Ocupa todo el ancho del contenedor */
+}
