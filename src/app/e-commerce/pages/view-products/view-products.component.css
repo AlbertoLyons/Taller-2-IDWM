@@ -37,7 +37,6 @@ button {
     cursor: pointer;
 }
 
-
 main {
     flex: 1;
     display: flex;
@@ -77,31 +76,43 @@ section.productos {
     transition: background-color 0.3s;
 }
 
+
 .paginacion button:hover {
     background-color: #4338CA;
 }
 
 .producto {
     background-color: white;
-    padding: 15px;
-    text-align: center;
+    padding: 10px; /* Reduce el padding interno */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Espaciado reducido entre elementos internos */
+    width: fit-content; /* Ajusta el ancho al contenido */
+    max-width: 100%; /* Evita que se expanda más allá del contenedor padre */
+    margin: auto; /* Centra el contenedor si es necesario */
 }
 
+
 .producto img {
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
+    max-height: 127.5px; /* Establece la altura máxima */
+    width: auto; /* Mantiene las proporciones */
+    display: block; /* Asegura que la imagen no tenga espacios adicionales */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+    object-fit: contain; /* Ajusta la imagen para que encaje dentro del contenedor sin recortarla */
 }
 
 footer {
     text-align: center;
     padding: 20px;
 }
+
 .btn-iniciar-sesion {
     color: black;
 }
+
 aside.filtros {
     width: 20%; /* Ajusta el ancho según tus necesidades */
     min-width: 250px; /* Ancho mínimo para asegurar legibilidad en pantallas pequeñas */
@@ -115,7 +126,6 @@ aside.filtros {
     justify-content: flex-start; /* Alinea los elementos al inicio verticalmente */
     min-height: 100vh; /* Altura mínima igual a la altura de la ventana gráfica */
 }
-
 
 aside.filtros h3 {
     margin-bottom: 15px;
@@ -175,43 +185,8 @@ app-search-bar {
     transform: scale(1.05);
 }
 
-aside.filtros select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    font-size: 1em;
-    color: #333;
-}
-
 aside.filtros button {
     margin-top: 20px;
-}
-
-.productos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));  /* Hasta 5 columnas dinámicas */
-    gap: 20px;  /* Espaciado entre productos */
-    justify-items: stretch;  /* Hace que cada producto ocupe todo el ancho disponible */
-    width: 100%;  /* Ocupa el 100% del ancho disponible */
-    margin: 0 auto;  /* Centra la grilla en la página */
-    max-width: 1300px;  /* Limita el ancho máximo de la grilla para que no se expandan más de 5 productos */
-}
-
-.producto {
-    background-color: white;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    max-width: 250px;  /* Ancho máximo por producto */
-    margin: 0 auto;  /* Asegura que cada producto esté centrado dentro de su contenedor */
 }
 
 .boton-agregar {
@@ -222,12 +197,38 @@ aside.filtros button {
     padding: 12px 24px;
     font-size: 14px;
     font-weight: bold;
-    margin-top: 20px;
     cursor: pointer;
+    margin-top: 15px; /* Añade espacio superior */
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .boton-agregar:hover {
     transform: scale(1.05);
     background-color: #0056b3;
+}
+
+/* Estilo para el mensaje verde */
+.message-box {
+    position: fixed;
+    top: 4px;  /* Mantiene el mensaje a 4px del borde superior */
+    left: 70%;  /* Centrado horizontalmente en la pantalla */
+    background-color: #4CAF50;  /* Color verde */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;  /* Asegúrate de que esté por encima de otros elementos */
+    opacity: 1;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;  /* Transiciones suaves */
+}
+
+/* Animación de entrada: El mensaje aparece lentamente */
+.message-box.ng-enter {
+    opacity: 1;  /* Hace el mensaje visible */
+}
+
+/* Animación de salida: El mensaje se desvanece y sube */
+.message-box.ng-leave {
+    opacity: 0;  /* El mensaje se desvanece */
+    transition: opacity 1s ease-out, transform 1s ease-out;
 }
