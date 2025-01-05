@@ -28,6 +28,7 @@ export class ViewProductsAdminComponent {
   actualPage: number = 1;
   order: string = "asc";
   type: string = "Nada";
+  search: string = "";
 
   pageChange = output<number>();
   maxPage: number = 0;
@@ -35,7 +36,7 @@ export class ViewProductsAdminComponent {
   buttonPreviousDisabled: boolean = true;
 
   constructor(private router: Router) {
-    this.getAllProductUsers(this.order, this.type, this.actualPage);
+    this.getAllProductUsers(this.order, this.type, this.search, this.actualPage);
     this.getMaxPage();
   }
 
@@ -47,8 +48,8 @@ export class ViewProductsAdminComponent {
     }) || 0;
   }
 
-  async getAllProductUsers(AscOrDesc:string, type : string, page: number) {
-    this.products = await this.productServices.getProductsUsers(AscOrDesc, type,  page)
+  async getAllProductUsers(AscOrDesc:string, type : string, search : string, page: number) {
+    this.products = await this.productServices.getProductsUsers(AscOrDesc, type, search, page)
     .catch((error) => {
       console.log(error);
       return [];
@@ -67,6 +68,6 @@ export class ViewProductsAdminComponent {
       this.buttonNextDisabled = false;
     }
     this.pageChange.emit(page);
-    this.getAllProductUsers(this.order, this.type, page);
+    this.getAllProductUsers(this.order, this.type, this.search, page);
   }
 }
