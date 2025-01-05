@@ -59,9 +59,16 @@ export class LogginComponent {
       .loggin(loginData)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
-        next: () => {
-          this.router.navigate(['products']);
-          console.log('Logged in successfully');
+        next: (response) => { 
+          const roles = Array.isArray(response.roles) ? response.roles : [response.roles];
+          console.log(roles);
+        
+          if (roles.includes("Admin")) {
+            this.router.navigate(['view-products-admin']);
+          } else {
+            this.router.navigate(['home']);
+            console.log('Logged in successfully');
+          }
         },
         error: (error: HttpErrorResponse) =>
           console.error('Error logging in:', error),

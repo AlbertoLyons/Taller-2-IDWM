@@ -3,9 +3,9 @@ export interface LogginDto{
     password: string
 }
 export interface Auth {
-    Id: number;
-    Name: string;
-    Email: string;
-    Roles: string[];
+    id: number;
+    name: string;
+    email: string;
+    roles: string[];
     token: string;
 }

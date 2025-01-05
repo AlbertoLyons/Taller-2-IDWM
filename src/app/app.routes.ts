@@ -17,6 +17,11 @@ export const routes: Routes = [
         loadComponent: () => import('./e-commerce/pages/cart/cart.component').then( m => m.CartComponent)
     },
     {
+        path: 'view-products-admin',
+        pathMatch: 'full',
+        loadComponent: () => import('./e-commerce/pages/view-products-admin/view-products-admin.component').then( m => m.ViewProductsAdminComponent)
+    },
+    {
         path:'**',
         pathMatch: 'full',
         redirectTo: 'home'

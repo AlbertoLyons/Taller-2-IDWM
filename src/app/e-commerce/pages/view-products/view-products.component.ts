@@ -9,17 +9,19 @@ import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-view-products',
   imports: [CommonModule, NavbarComponent, ChangePageButtonsComponent, SearchBarComponent, FormsModule],
-  providers: [ProductServices],
+  providers: [ProductServices, CartService],
   templateUrl: './view-products.component.html',
   styleUrl: './view-products.component.css'
 })
 export class ViewProductsComponent {
  
   private productServices: ProductServices = inject(ProductServices);
+  private productCartServices: CartService = inject(CartService);
   products: Product[] = [];
   actualPage: number = 1;
   AscOrDesc: string = "asc";
@@ -29,6 +31,8 @@ export class ViewProductsComponent {
   maxPage: number = 0;
   buttonNextDisabled: boolean = false;
   buttonPreviousDisabled: boolean = true;
+  message: string = '';  // Variable para almacenar el mensaje
+  showMessage: boolean = false;  // Controla si el mensaje debe mostrarse o no
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
@@ -75,16 +79,32 @@ export class ViewProductsComponent {
 
       this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
       }
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
-  }
-  async applyFilters() {
-    this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
-    this.cdr.markForCheck();
-    }
-    agregarAlCarrito(id: number) {
-      console.log(`Producto con ID ${id} agregado al carrito`);
-      // Aquí puedes agregar la lógica para añadir el producto al carrito, por ejemplo:
-      // this.cartService.addToCart(id);
-  }
+      navigateTo(route: string): void {
+        this.router.navigate([route]);
+      }
+      async applyFilters() {
+        this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+        this.cdr.markForCheck();
+      }
+      async agregarAlCarrito(id: number) {
+        console.log(`Producto con ID ${id} agregado al carrito`);
+        
+        try {
+          const response = await this.productCartServices.AddProductToCart(id);
+          
+          this.message = response;  // Asignar el mensaje de la respuesta
+          this.showMessage = true;  // Hacer visible el mensaje
+          
+          setTimeout(() => {
+            this.showMessage = false;
+          }, 3000);  // 3000 ms = 3 segundos
+        } catch (error) {
+          console.log('Error:', error);
+          this.message = 'Hubo un problema al agregar el producto al carrito';
+          this.showMessage = true;
+          setTimeout(() => {
+            this.showMessage = false;
+          }, 3000);
+        }
+      }
 }

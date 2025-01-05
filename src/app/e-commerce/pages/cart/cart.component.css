@@ -1,88 +1,192 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
 main {
-    flex: 1;
     display: flex;
-    flex-direction: row-reverse; /* Coloca aside.filtros a la derecha */
-    min-height: 100vh;
-}
-
-aside.filtros {
-    width: 20%;
-    min-width: 250px;
-    background-color: #FFFFFF; /* Fondo blanco */
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: 100vh;
-}
-
-aside.filtros h3 {
-    margin-bottom: 15px;
-    font-size: 1.5em;
-    color: #333;
-}
-
-aside.filtros label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
-}
-
-aside.filtros select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    font-size: 1em;
-    color: #333;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-aside.filtros select:focus {
-    border-color: #3B82F6;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-}
-
-.btn-aplicar-filtros {
-    background-color: #4F46E5;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    width: calc(100% - 10px);
-    box-sizing: border-box;
-    margin-top: 10px;
-    margin-left: 5px;
-}
-
-.btn-aplicar-filtros:hover {
-    background-color: #4338CA;
-    transform: scale(1.05);
-}
-
-section.productos {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
     gap: 20px;
     padding: 20px;
-    background-color: #F3F4F6; /* Blanco grisáceo */
-}
+    height: calc(100vh - 100px); /* Altura de la página menos el tamaño del navbar (ajústalo según tu diseño) */
+  }
+  
+  .productos-lista {
+    flex: 3;
+    max-height: 100%; /* Ajusta la altura al tamaño del contenedor padre */
+    overflow-y: auto; /* Barra de desplazamiento vertical si es necesario */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .productos-lista ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .producto {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .producto img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-right: 15px;
+  }
+  
+  .producto-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .producto-info h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .producto-info p {
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  .cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cantidad button {
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .cantidad button:hover {
+    background-color: #45a049;
+  }
+  
+  .cantidad span {
+    font-size: 16px;
+  }
+  
+  .resumen-compra {
+    flex: 2;
+    height: 100%; /* Ocupa el 100% de la altura del contenedor */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    text-align: center; /* Centra el texto de los elementos internos */
+  }
+  
+  .resumen-compra h3 {
+    margin-bottom: 20px;
+  }
+  
+  .resumen-compra p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .resumen-compra button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top:25px;
+    cursor: pointer;
+  }
+  
+  .resumen-compra button:hover {
+    background-color: #0056b3;
+  }
+  
+  .resumen-compra button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .producto {
+    position: relative; /* Asegura que el botón se posicione relativo al contenedor del producto */
+  }
+  
+  .delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px; /* Asegura que el botón sea redondo */
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute; /* Posiciona el botón dentro del contenedor del producto */
+    bottom: 33px; /* Ubica el botón 10px desde la parte inferior del contenedor */
+    right: 10px; /* Alineado a la derecha con un pequeño margen */
+    border-radius: 50%; /* Hace el botón redondo */
+    width: 40px; /* Define el tamaño del botón */
+    height: 40px; /* Define el tamaño del botón */
+  }
+  
+  .delete-btn i {
+    margin: 0; /* Elimina el margen del ícono */
+  }
+  
+  .delete-btn:hover {
+    background-color: darkred;
+  }
+  
+  .delete-btn:focus {
+    outline: none;
+  }
+  
+  .empty-cart-message {
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    height: 200px;            /* Establece una altura para que sea visible el centro */
+    text-align: center;       /* Asegura que el texto esté centrado dentro del div */
+    font-size: 1.5rem;        /* Tamaño de la fuente */
+    border-radius: 8px;       /* Opcional: bordes redondeados */
+  }
+  
+  /* Estilos para los campos de entrada de dirección */
+  .input-fields {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .input-fields label {
+    display: block;
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .input-fields input {
+    width: 60%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Estilos adicionales para el botón "Finalizar compra" */
+  button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  

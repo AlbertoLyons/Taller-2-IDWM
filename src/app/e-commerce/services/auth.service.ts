@@ -25,6 +25,7 @@ export class AuthService {
     return this.http.post<Auth>(`${this.baseUrl}/login`, credentials).pipe(
       map((auth) => {
         this.handleSuccessfulAuth(auth);
+        console.log(auth);
         return auth;
       })
     );
