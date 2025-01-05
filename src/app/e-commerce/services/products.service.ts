@@ -14,9 +14,9 @@ export class ProductServices {
 
   public errors: string[] = []; 
 
-  async getProductsUsers(AscOrDesc:string, type:string, pageNumber: number): Promise<Product[]> {
+  async getProductsUsers(AscOrDesc:string, type:string, search: string, pageNumber: number): Promise<Product[]> {
     try{
-      const params = new HttpParams().set('AscOrDesc', AscOrDesc).set("pageNumber", pageNumber).set("type", "Nada");
+      const params = new HttpParams().set('AscOrDesc', AscOrDesc).set("pageNumber", pageNumber).set("type", type).set("name", search);
       const response = await firstValueFrom(this.http.get<ResponseAPIGetAllProducts>(`${this.baseUrl}/GetAll`, {params}));
       return Promise.resolve(response.products);
     }catch(error){

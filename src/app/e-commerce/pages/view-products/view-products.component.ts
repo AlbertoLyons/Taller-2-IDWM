@@ -8,32 +8,34 @@ import { SearchBarComponent } from '../../components/search-bar/search-bar.compo
 import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-view-products',
   imports: [CommonModule, NavbarComponent, ChangePageButtonsComponent, SearchBarComponent, FormsModule],
-  providers: [ProductServices],
+  providers: [ProductServices, CartService],
   templateUrl: './view-products.component.html',
   styleUrl: './view-products.component.css'
 })
 export class ViewProductsComponent {
-
-
-
  
   private productServices: ProductServices = inject(ProductServices);
+  private productCartServices: CartService = inject(CartService);
   products: Product[] = [];
   actualPage: number = 1;
-  order: string = "asc";
+  AscOrDesc: string = "asc";
   type: string = "Nada";
-  
+  search: string = "";
   pageChange = output<number>();
   maxPage: number = 0;
   buttonNextDisabled: boolean = false;
   buttonPreviousDisabled: boolean = true;
+  message: string = '';  // Variable para almacenar el mensaje
+  showMessage: boolean = false;  // Controla si el mensaje debe mostrarse o no
 
-  constructor(private router: Router) {
-    this.getAllProductUsers(this.order, this.type, this.actualPage);
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+    this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
     this.getMaxPage();
   }
   async getMaxPage(){
@@ -43,13 +45,19 @@ export class ViewProductsComponent {
       return 0;
     }) || 0;
   }
-  async getAllProductUsers(AscOrDesc:string, type : string, page: number) {
-    this.products = await this.productServices.getProductsUsers(AscOrDesc, type,  page)
+  async getAllProductUsers(AscOrDesc:string, type : string, page: number, search: string){ {
+    console.log(this.type);
+    console.log(this.actualPage);
+    console.log(this.AscOrDesc);
+    console.log(this.search);
+    this.products = await this.productServices.getProductsUsers(AscOrDesc, type, search, page)
     .catch((error) => {
       console.log(error);
       return [];
     }) || [];
-  }
+    console.log(this.products);
+
+  }}
   setNewPage(page: number) {
     if (page === 1) {
       this.buttonPreviousDisabled = true;
@@ -61,13 +69,42 @@ export class ViewProductsComponent {
     } else {
       this.buttonNextDisabled = false;
     }
+    
     this.pageChange.emit(page);
-    this.getAllProductUsers(this.order, this.type, page);
+    this.actualPage = page;
+    this.getAllProductUsers(this.AscOrDesc, this.type, page, this.search);
     }
-    setSearch($event: Event) {
-      throw new Error('Method not implemented.');
+    setSearch(search: string) {
+    this.search = search;
+
+      this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
       }
-  navigateTo(route: string): void {
-    this.router.navigate([route]);
-  }
+      navigateTo(route: string): void {
+        this.router.navigate([route]);
+      }
+      async applyFilters() {
+        this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+        this.cdr.markForCheck();
+      }
+      async agregarAlCarrito(id: number) {
+        console.log(`Producto con ID ${id} agregado al carrito`);
+        
+        try {
+          const response = await this.productCartServices.AddProductToCart(id);
+          
+          this.message = response;  // Asignar el mensaje de la respuesta
+          this.showMessage = true;  // Hacer visible el mensaje
+          
+          setTimeout(() => {
+            this.showMessage = false;
+          }, 3000);  // 3000 ms = 3 segundos
+        } catch (error) {
+          console.log('Error:', error);
+          this.message = 'Hubo un problema al agregar el producto al carrito';
+          this.showMessage = true;
+          setTimeout(() => {
+            this.showMessage = false;
+          }, 3000);
+        }
+      }
 }
