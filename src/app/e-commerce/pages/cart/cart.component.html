@@ -50,6 +50,15 @@
     </div>
 
     <!-- Botón para finalizar compra, habilitado solo si todos los campos están completados -->
-    <button [disabled]="!isFormValid()" (click)="finalizePurchase()">Finalizar compra</button>
+    <button [disabled]="!isFormValid()" (click)="finalizePurchase(pais, ciudad, comuna, calle)">Finalizar compra</button>
+
+    <!-- Botón para descargar comprobante -->
+    <button
+      class="download-btn"
+      [disabled]="!descargaFinalizada"
+      (click)="descargarComprobante()"
+    >
+      <i class="fa fa-download"></i> Descargar comprobante
+    </button>
   </aside>
 </main>
