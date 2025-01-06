@@ -7,6 +7,9 @@ export const authGuard: CanActivateFn = (_route, _state) => {
   const localStorageService = inject(LocalStorageService);
 
   if (localStorageService.getVariable('token')) {
+    if (localStorageService.getVariable('role') === 'admin') {
+      router.navigate(['/view-products-admin']);
+    }
     return true;
   }
   router.navigate(['/login']);
