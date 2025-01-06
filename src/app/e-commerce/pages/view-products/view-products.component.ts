@@ -42,7 +42,7 @@ export class ViewProductsComponent {
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
     this.getMaxPage();
-    const token = localStorage.getItem('auth'); // Cambia a sessionStorage si es necesario
+    const token = localStorage.getItem('token'); // Cambia a sessionStorage si es necesario
     console.log(token);
     if (token != null) {
       try {
