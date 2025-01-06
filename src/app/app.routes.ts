@@ -32,6 +32,11 @@ export const routes: Routes = [
         loadComponent: () => import('./e-commerce/pages/view-products-admin/view-products-admin.component').then( m => m.ViewProductsAdminComponent)
     },
     {
+        path: 'editProfile',
+        pathMatch: 'full',
+        loadComponent: () => import('./e-commerce/pages/edit-profile/edit-profile.component').then( m => m.EditProfileComponent)
+    },
+    {
         path:'**',
         pathMatch: 'full',
         redirectTo: 'home'

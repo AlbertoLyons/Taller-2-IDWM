@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-view-products',
@@ -19,6 +20,8 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './view-products.component.css'
 })
 export class ViewProductsComponent {
+
+
  
   private productServices: ProductServices = inject(ProductServices);
   private productCartServices: CartService = inject(CartService);
@@ -33,10 +36,27 @@ export class ViewProductsComponent {
   buttonPreviousDisabled: boolean = true;
   message: string = '';  // Variable para almacenar el mensaje
   showMessage: boolean = false;  // Controla si el mensaje debe mostrarse o no
+  isAuthenticated = false;
+  userName: string | null = null;
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) {
     this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
     this.getMaxPage();
+    const token = localStorage.getItem('auth'); // Cambia a sessionStorage si es necesario
+    console.log(token);
+    if (token != null) {
+      try {
+        const auth = JSON.parse(token);
+
+        this.userName = auth.name || 'Usuario'; // Cambia 'name' según el payload de tu token
+        this.isAuthenticated = true;
+        console.log(this.userName);
+      } catch (error) {
+        console.error('Error al decodificar el token', error);
+        this.isAuthenticated = false;
+      }
+
+    }
   }
   async getMaxPage(){
     this.maxPage = await this.productServices.getMaxPage()
@@ -75,14 +95,15 @@ export class ViewProductsComponent {
     this.getAllProductUsers(this.AscOrDesc, this.type, page, this.search);
     }
     setSearch(search: string) {
-      this.search = search;
-      this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+    this.search = search;
+    this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
     }
     navigateTo(route: string): void {
       this.router.navigate([route]);
     }
     async applyFilters() {
       this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+
       this.cdr.markForCheck();
     }
     async agregarAlCarrito(id: number) {
@@ -104,6 +125,22 @@ export class ViewProductsComponent {
         setTimeout(() => {
           this.showMessage = false;
         }, 3000);
+      }
+    }
+    logout() {
+      localStorage.removeItem('auth'); // Elimina el token
+      this.isAuthenticated = false;
+      this.userName = '';
+      this.clearCookies();
+      this.navigateTo('iniciarSesion'); // Redirige al inicio de sesión
+    }
+    clearCookies(): void {
+      const cookies = document.cookie.split(';');
+      for (const cookie of cookies) {
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+
       }
     }
 }

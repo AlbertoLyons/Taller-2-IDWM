@@ -190,3 +190,30 @@ main {
     cursor: not-allowed;
   }
   
+  .download-btn {
+    margin-top: 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .download-btn:disabled {
+    background-color: #bfbfbf;
+    cursor: not-allowed;
+  }
+
+  .download-btn i {
+    font-size: 18px;
+  }
+
+  .download-btn:hover:not(:disabled) {
+    background-color: #45a049;
+  }
