@@ -37,6 +37,17 @@ export const routes: Routes = [
         loadComponent: () => import('./e-commerce/pages/edit-profile/edit-profile.component').then( m => m.EditProfileComponent)
     },
     {
+        path: 'viewReceipts',
+        pathMatch: 'full',
+        loadComponent: () => import('./e-commerce/pages/view-receipts/view-receipts.component').then( m => m.ViewReceiptsComponent)
+    },
+    {
+        path: 'viewClients',
+        pathMatch: 'full',
+        loadComponent: () => import('./e-commerce/pages/view-clients/view-clients.component').then( m => m.ViewClientsComponent)
+    },
+
+    {
         path:'**',
         pathMatch: 'full',
         redirectTo: 'home'
