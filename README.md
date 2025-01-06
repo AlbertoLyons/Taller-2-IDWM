@@ -1,59 +1,28 @@
-# Taller2
+# Taller 2 IDWM
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.4.
+El proyecto fue construido con [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
 
-## Development server
+## Levantamiento del proyecto
+### Necesita instalar JavaScript, Node.js y npm en su computadora, de lo contrario no va a funcionar correctamente.
+### Pasos para levantarlo
 
-To start a local development server, run:
+1. Debe de ubicarse en alguna carpeta en su computadora
 
-```bash
-ng serve
-```
+2. Abrir la consola
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+3. En la consola, escribir lo siguiente: "git clone https://github.com/AlbertoLyons/Taller-2-IDWM.git" y esperar a que el proyecto se clone
 
-## Code scaffolding
+4. Una vez que termine de clonarse y guardarse en su computadora, debe de dirigirse a la carpeta creada desde la consola utilizando: "cd Taller-2-IDWM"
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+5. Dentro de la carpeta desde la consola, escribir "npm install" para restaurar los paquetes necesarios para el funcionamiento del proyecto
 
-```bash
-ng generate component component-name
-```
+6. Una vez instalados los paquetes, para iniciar la página debe de escribir "ng serve"
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+7. Para acceder a la página, debe de abrir un navegador y ingresar la dirección "localhost:4200" para poder visualizarla
+### Importante 
 
-```bash
-ng generate --help
-```
+El proyecto se conecta a una API REST de ASP .NET CORE 8 de manera local a través de la dirección "localhost:5225/api". Sin esa API levantada y corriendo, en el proyecto no funcionarán los metodos HTTP GET y POST que realiza. El proyecto de la API REST es el siguiente:
 
-## Building
+- https://github.com/AlbertoLyons/Taller1IDWM.git
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Si no tiene el proyecto de la API REST, clonelo y siga los pasos para levantarlo mediante el README que tiene

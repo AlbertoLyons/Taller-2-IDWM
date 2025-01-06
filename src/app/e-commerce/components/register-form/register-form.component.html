@@ -1,0 +1,108 @@
+<h2 class="text-3xl pt-5 pb-5">Registrarse</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col px-12">
+    <!-- rut -->
+    <label class=" text-2xl" for="rut">Rut</label>
+    <input
+      class="border-2 border-gray-300 rounded-md p-2 m-2"
+      id="rut"
+      type="rut"
+      formControlName="rut"
+      [class.border-red-500]="registerForm.get('rut')?.invalid && registerForm.get('rut')?.touched"
+    />
+    <div *ngIf="registerForm.get('rut')?.invalid && registerForm.get('rut')?.touched" class="error-message">
+      {{ getFieldError('rut') }}
+    </div>
+    <!-- nombre -->
+    <label class="px-10 text-2xl" for="name">Nombre</label>
+    <input
+      class="border-2 border-gray-300 rounded-md p-2 m-2"
+      id="name"
+      type="name"
+      formControlName="name"
+      [class.border-red-500]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+    />
+    <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="error-message">
+      {{ getFieldError('name') }}
+    </div>
+    <!-- fecha de nacimiento -->
+    <label class="px-10 text-2xl" for="birthdate">Fecha de nacimiento</label>
+    <input
+      class="border-2 border-gray-300 rounded-md p-2 m-2"
+      id="birthdate"
+      type="date"
+      formControlName="birthdate"
+      [class.border-red-500]="registerForm.get('birthdate')?.invalid && registerForm.get('birthdate')?.touched"
+    />
+    <div *ngIf="registerForm.get('birthdate')?.invalid && registerForm.get('birthdate')?.touched" class="error-message">
+      {{ getFieldError('birthdate') }}
+    </div>
+    <!-- correo electrónico -->
+    <label class="px-10 text-2xl" for="mail">Correo electrónico</label>
+    <input
+      class="border-2 border-gray-300 rounded-md p-2 m-2"
+      id="mail"
+      type="email"
+      formControlName="mail"
+      [class.border-red-500]="registerForm.get('mail')?.invalid && registerForm.get('mail')?.touched"
+    />
+    <div *ngIf="registerForm.get('mail')?.invalid && registerForm.get('mail')?.touched" class="error-message">
+      {{ getFieldError('mail') }}
+    </div>
+    <!-- genero -->
+    <label class="px-10 text-2xl" for="gender">Género</label>
+    <select 
+      id="gender" 
+      class="border-2 border-gray-300 rounded-md p-2 m-2"
+      formControlName="gender"
+      [class.border-red-500]="registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched"
+
+      >
+      <option>Masculino</option>
+      <option>Femenino</option>
+      <option>Prefiero no decirlo</option>
+      <option>Otro</option>
+    </select>
+    <div *ngIf="registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched" class="error-message">
+      {{ getFieldError('gender') }}
+    </div>
+    <!-- contraseña -->
+    <label class="px-10 text-2xl" for="gender">Contraseña</label>
+    <input
+      class="border-2 border-gray-300 rounded-md p-2 m-2"
+      id="password"
+      type="password"
+      formControlName="password"
+      [class.border-red-500]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+    />
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+      {{ getFieldError('password') }}
+    </div>
+      <!-- confirmar contraseña -->
+      <label class="px-10 text-2xl" for="gender">Confirmar contraseña</label>
+      <input
+        class="border-2 border-gray-300 rounded-md p-2 m-2"
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        [class.border-red-500]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+      />
+      <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error-message">
+        {{ getFieldError('confirmPassword') }}
+    </div>  
+
+    <div class="form-group pt-5 text-2xl">
+      <button
+      class="bg-[#668cff] w-full text-black font-semibold rounded-md p-5 transition-opacity"
+      [ngClass]="{ 'opacity-50 cursor-not-allowed': registerForm.invalid || loading }"
+      type="submit"
+      [disabled]="registerForm.invalid || loading"
+      >
+        <ng-container *ngIf="loading; else normal">
+          <span class="loading-spinner"></span> Procesando...
+        </ng-container>
+        <ng-template #normal>
+          Registrarse
+        </ng-template>
+      </button>    
+    </div>
+</form>
