@@ -98,12 +98,12 @@ export class ViewProductsComponent {
     this.search = search;
     this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
     }
-
     navigateTo(route: string): void {
       this.router.navigate([route]);
     }
     async applyFilters() {
       this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+
       this.cdr.markForCheck();
     }
     async agregarAlCarrito(id: number) {
@@ -140,8 +140,7 @@ export class ViewProductsComponent {
         const eqPos = cookie.indexOf('=');
         const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
         document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+
       }
     }
 }
-
-
