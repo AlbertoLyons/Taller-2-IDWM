@@ -16,10 +16,6 @@ import { jsPDF } from 'jspdf';  // Importamos la librería jsPDF
   styleUrl: './cart.component.css'
 })
 export class CartComponent {
-
-
-
-
   private productServices: CartService = inject(CartService);
   productsCart: ProductCart[] = [];
   totalPrice: number = 0;
