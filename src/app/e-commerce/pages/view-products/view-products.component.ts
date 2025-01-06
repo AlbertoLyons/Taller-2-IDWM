@@ -75,36 +75,35 @@ export class ViewProductsComponent {
     this.getAllProductUsers(this.AscOrDesc, this.type, page, this.search);
     }
     setSearch(search: string) {
-    this.search = search;
-
+      this.search = search;
       this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
-      }
-      navigateTo(route: string): void {
-        this.router.navigate([route]);
-      }
-      async applyFilters() {
-        this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
-        this.cdr.markForCheck();
-      }
-      async agregarAlCarrito(id: number) {
-        console.log(`Producto con ID ${id} agregado al carrito`);
+    }
+    navigateTo(route: string): void {
+      this.router.navigate([route]);
+    }
+    async applyFilters() {
+      this.getAllProductUsers(this.AscOrDesc, this.type,  this.actualPage, this.search);
+      this.cdr.markForCheck();
+    }
+    async agregarAlCarrito(id: number) {
+      console.log(`Producto con ID ${id} agregado al carrito`);
+      
+      try {
+        const response = await this.productCartServices.AddProductToCart(id);
         
-        try {
-          const response = await this.productCartServices.AddProductToCart(id);
-          
-          this.message = response;  // Asignar el mensaje de la respuesta
-          this.showMessage = true;  // Hacer visible el mensaje
-          
-          setTimeout(() => {
-            this.showMessage = false;
-          }, 3000);  // 3000 ms = 3 segundos
-        } catch (error) {
-          console.log('Error:', error);
-          this.message = 'Hubo un problema al agregar el producto al carrito';
-          this.showMessage = true;
-          setTimeout(() => {
-            this.showMessage = false;
-          }, 3000);
-        }
+        this.message = response;  // Asignar el mensaje de la respuesta
+        this.showMessage = true;  // Hacer visible el mensaje
+        
+        setTimeout(() => {
+          this.showMessage = false;
+        }, 3000);  // 3000 ms = 3 segundos
+      } catch (error) {
+        console.log('Error:', error);
+        this.message = 'Hubo un problema al agregar el producto al carrito';
+        this.showMessage = true;
+        setTimeout(() => {
+          this.showMessage = false;
+        }, 3000);
       }
+    }
 }

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core';
 import { Product, ResponseAPIGetAllProducts } from '../interfaces/ResponseApi_products';
 import { firstValueFrom } from 'rxjs';
+import { addEditProduct } from '../interfaces/add-edit-product';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,28 @@ export class ProductServices {
       return Promise.resolve(response.products);
     }catch(error){
       console.log("Error en getProductsUsers",error)
+      let e = error as HttpErrorResponse;
+      this.errors.push(e.message);
+      return Promise.reject(error);
+    }
+  }
+  async deleteProduct(id: number): Promise<void> {
+    try{
+      await firstValueFrom(this.http.delete(`${this.baseUrl}/?id=${id}`));
+      return Promise.resolve();
+    }catch(error){
+      console.log("Error en deleteProduct",error)
+      let e = error as HttpErrorResponse;
+      this.errors.push(e.message);
+      return Promise.reject(error);
+    }
+  }
+  async updateProduct(id: number, product: addEditProduct): Promise<void> {
+    try{
+      await firstValueFrom(this.http.put(`${this.baseUrl}`+ "/" + id, product));
+      return Promise.resolve();
+    }catch(error){
+      console.log("Error en editProduct",error)
       let e = error as HttpErrorResponse;
       this.errors.push(e.message);
       return Promise.reject(error);
