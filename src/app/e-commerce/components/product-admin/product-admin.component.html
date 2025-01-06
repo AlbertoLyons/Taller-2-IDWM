@@ -1,0 +1,118 @@
+<div class="bg-white p-5 flex flex-col items-center justify-center rounded-md shadow-lg m-5 max-w-max">
+    <img src="{{imageUrl}}" onerror="this.src='images (1).png'">
+    <h1 class="font-bold">{{name}}</h1>
+    <p>Tipo: {{type}}</p>
+    <p>Stock: {{stock}}</p>
+    <p>Precio: {{price}} CLP</p>
+    <div class="text-xl font-medium mt-3 flex space-x-5">
+        <button (click)="openModal('edit')" class="bg-[#FFAB62] text-black px-3 py-1 rounded-lg">
+            Editar
+        </button>
+        <button (click)="openModal('delete')" class="bg-[#FF6262] text-black px-3 py-1 rounded-lg">
+            Eliminar
+        </button>
+    </div>
+</div>
+<!-- Modal Delete product -->
+<div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50" *ngIf="deleteIsVisible">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm text-center">
+      <p>¿Estás seguro de que deseas eliminar el producto {{name}}?</p>
+      <div class="mt-4 flex justify-end space-x-3">
+        <button class="bg-gray-300 text-black px-4 py-2 rounded" (click)="cancel('delete')">Cancelar</button>
+        <button class="bg-red-600 text-black px-4 py-2 rounded" (click)="confirm('delete')">Eliminar</button>
+      </div>
+    </div>
+</div>
+<!-- Modal Edit product -->
+<div class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50" *ngIf="editIsVisible">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm text-center relative">
+        <button class="bg-red-600 text-black px-4 py-2 rounded absolute top-2 right-2" (click)="cancel('edit')">
+            X
+        </button>
+        <img class="mx-auto p-5" src="{{imageUrl}}" onerror="this.src='images (1).png'">
+        <ngx-dropzone (change)="onSelect($event)">
+            <ngx-dropzone-label>Seleccione una imagen</ngx-dropzone-label>
+            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </ngx-dropzone>
+        <div class=" bg-[#CFCFCF] mt-4 flex justify-end space-x-3">
+            <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="flex flex-col px-12 pt-2">
+
+                <!-- nombre -->
+                <label for="name">Nombre</label>
+                <input
+                class="border-2 border-gray-300 rounded-md p-2 m-2"
+                id="name"
+                type="name"
+                placeholder="{{name}}"
+                formControlName="name"
+                [class.border-red-500]="editForm.get('name')?.invalid && editForm.get('name')?.touched"
+                />
+                <div *ngIf="editForm.get('name')?.invalid && editForm.get('name')?.touched" class="error-message">
+                {{ getFieldError('name') }}
+                </div>
+                <!-- tipo -->
+                <label for="type">Tipo</label>
+                <select 
+                  id="type" 
+                  class="border-2 border-gray-300 rounded-md p-2 m-2"
+                  formControlName="type"
+                  [class.border-red-500]="editForm.get('type')?.invalid && editForm.get('type')?.touched"
+                  >
+                  <option value="" disabled selected>{{type}}</option>
+                  <option>Poleras</option>
+                  <option>Gorros</option>
+                  <option>Jugueteria</option>
+                  <option>Alimentacion</option>
+                  <option>Libros</option>
+                </select>
+                <div *ngIf="editForm.get('type')?.invalid && editForm.get('type')?.touched" class="error-message">
+                  {{ getFieldError('type') }}
+                </div>
+                <!-- stock -->
+                <label for="stock">Stock</label>
+                <input
+                class="border-2 border-gray-300 rounded-md p-2 m-2"
+                id="stock"
+                type="number"
+                placeholder="{{stock}}"
+                formControlName="stock"
+                [class.border-red-500]="editForm.get('stock')?.invalid && editForm.get('stock')?.touched"
+                />
+                <div *ngIf="editForm.get('stock')?.invalid && editForm.get('stock')?.touched" class="error-message">
+                {{ getFieldError('stock') }}
+                </div>
+                <!-- price -->
+                <label for="price">Precio</label>
+                <input
+                class="border-2 border-gray-300 rounded-md p-2 m-2"
+                id="price"
+                type="number"
+                placeholder="{{price}}"
+                formControlName="price"
+                [class.border-red-500]="editForm.get('price')?.invalid && editForm.get('price')?.touched"
+                />
+                <div *ngIf="editForm.get('price')?.invalid && editForm.get('price')?.touched" class="error-message">
+                {{ getFieldError('price') }}
+                </div>
+                <!-- Boton ingresar -->
+                <div class="form-group pt-5 text-2xl">
+                    <button
+                    class="bg-[#8CFF4E] w-full text-black font-semibold rounded-md p-2 mb-5 transition-opacity"
+                    [ngClass]="{ 'opacity-50 cursor-not-allowed': editForm.invalid || loading }"
+                    type="submit"
+                    [disabled]="editForm.invalid || loading"
+                    >
+                        <ng-container *ngIf="loading; else normal">
+                        <span class="loading-spinner"></span> Procesando...
+                        </ng-container>
+                        <ng-template #normal>
+                        Ingresar
+                        </ng-template>
+                    </button>    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

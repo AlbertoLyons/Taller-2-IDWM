@@ -1,0 +1,33 @@
+input[type="text"] {
+    color: black;
+    width: 100%; /* O un valor mayor, por ejemplo, 60% */
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-button {
+    position: absolute;
+    right: 8px;  /* Alinea el botón a la derecha */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button i {
+    color: #333;  /* Color de la lupa */
+    font-size: 18px;
+}
+

@@ -1,0 +1,60 @@
+<div class="min-h-screen w-screen bg-[#668cff] ">
+    <app-navbar>        
+        <app-search-bar (notifyParent)="setSearch($event)"></app-search-bar>
+        <div *ngIf="showMessage" class="message-box">
+            {{ message }}
+        </div>
+        <div class="header-buttons flex px-4">
+            <a class="bg-white px-4 py-2 rounded hover:bg-[#b4b4b4]" href="view-receipts-admin">
+                <button class="text-black">
+                    <img style="width: 30px;" src="receipt.png" alt="">
+                </button>
+            </a>
+        </div>        
+    </app-navbar>
+    <main>
+        <aside class="filtros">
+            <h3>Filtros</h3>
+            <label for="tipo">Tipo</label>
+            <select id="tipo" [(ngModel)]="type">
+            <option value="Nada">Nada</option>
+            <option value="Poleras">Poleras</option>
+            <option value="Gorros">Gorros</option>
+            <option value="Jugueteria">Juguetería</option>
+            <option value="Alimentacion">Alimentación</option>
+            <option value="Libros">Libros</option>
+            </select>
+            
+            <label for="AscOrDesc">Ordenar</label>
+            <select id="AscOrDesc" [(ngModel)]="AscOrDesc">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+            <button class="bg-[#6366F1] p-3 rounded-md" (click)="applyFilters()">Aplicar Filtros</button>
+        </aside>
+        <section class="bg-[#6366F1] grid grid-cols-1 lg:grid-cols-4 gap-4 p-4 w-full">
+            <div *ngIf="products.length === 0">
+                <p>No hay productos disponibles</p>
+            </div>
+            <div *ngFor="let producto of products" class="producto">
+                <app-product-admin
+                    [id]="producto.id"
+                    [imageUrl]="producto.imageUrl"
+                    [name]="producto.name"
+                    [type]="producto.type"
+                    [stock]="producto.stock"
+                    [price]="producto.price">
+                </app-product-admin>
+            </div>
+        </section>
+
+    </main>
+    <div class="bg-[#6366F1] flex justify-center">
+        <app-change-page-buttons 
+            (notifyParent)="setNewPage($event)" 
+            [maxPage]="maxPage" 
+            [buttonNextDisabled]="buttonNextDisabled" 
+            [buttonPreviousDisabled]="buttonPreviousDisabled">
+        </app-change-page-buttons>
+    </div>
+</div>

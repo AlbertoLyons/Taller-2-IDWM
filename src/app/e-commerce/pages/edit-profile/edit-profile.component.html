@@ -1,0 +1,78 @@
+<body>
+    <app-navbar>            
+      <div class="header-buttons">
+        <button class="btn-cerrar-sesion" (click)="logout()">Cerrar sesión</button>
+        <a href="cart"><button>🛒</button></a>
+      </div>
+    </app-navbar>
+  
+    <div class="container">
+      <div class="form-container">
+        
+        <!-- Mensaje de éxito/error para Editar Perfil -->
+        <div *ngIf="successMessage || errorMessage" class="alert" [ngClass]="{'success': successMessage, 'error2': errorMessage}">
+          {{ successMessage || errorMessage }}
+        </div>
+  
+        <!-- Formulario de edición de perfil -->
+        <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+          <h2>Editar perfil</h2>
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" type="text" [placeholder]="nombrePlaceholder">
+          
+          <div *ngIf="editUserForm.get('nombre')?.hasError('minlength') && editUserForm.get('nombre')?.touched">
+            <span class="error">El nombre debe tener al menos 8 caracteres.</span>
+          </div>
+          <div *ngIf="editUserForm.get('nombre')?.hasError('maxlength') && editUserForm.get('nombre')?.touched">
+            <span class="error">El nombre no debe tener más de 255 caracteres.</span>
+          </div>
+  
+          <label for="fecha">Fecha de nacimiento</label>
+          <input id="fecha" formControlName="fecha" type="text" [placeholder]="fechaPlaceholder">
+          
+          <div *ngIf="editUserForm.get('fecha')?.hasError('invalidDateFormat') && editUserForm.get('fecha')?.touched">
+            <span class="error">La fecha debe tener el formato "aaaa-mm-dd".</span>
+          </div>
+  
+          <label for="genero">Género</label>
+          <input id="genero" formControlName="genero" type="text" [placeholder]="generoPlaceholder">
+          
+          <div *ngIf="editUserForm.get('genero')?.hasError('invalidGender') && editUserForm.get('genero')?.touched">
+            <span class="error">El género debe ser uno de los siguientes: Femenino, Masculino, Otro, Prefiero no decirlo.</span>
+          </div>
+  
+          <button type="submit" [disabled]="!editUserForm.valid" [class.disabled-button]="!editUserForm.valid">Editar</button>
+        </form>
+  
+        <!-- Formulario para cambiar contraseña -->
+        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordChange()" style="margin-top: 20px;">
+          <h2>Cambiar contraseña</h2>
+  
+          <label for="actual">Contraseña actual</label>
+          <input id="actual" formControlName="actual" type="password">
+          
+          <div *ngIf="passwordForm.get('actual')?.hasError('required') && passwordForm.get('actual')?.touched">
+            <span class="error">La contraseña actual es obligatoria.</span>
+          </div>
+  
+          <label for="nueva">Contraseña nueva</label>
+          <input id="nueva" formControlName="nueva" type="password">
+          
+          <div *ngIf="passwordForm.get('nueva')?.hasError('required') && passwordForm.get('nueva')?.touched">
+            <span class="error">La nueva contraseña es obligatoria.</span>
+          </div>
+  
+          <label for="confirmar">Confirmar contraseña</label>
+          <input id="confirmar" formControlName="confirmar" type="password">
+          
+          <div *ngIf="passwordForm.get('confirmar')?.hasError('required') && passwordForm.get('confirmar')?.touched">
+            <span class="error">Confirmar contraseña es obligatorio.</span>
+          </div>
+  
+          <button type="submit" [disabled]="!passwordForm.valid" [class.disabled-button]="!passwordForm.valid">Cambiar</button>
+        </form>
+        
+      </div>
+    </div>
+  </body>
+  

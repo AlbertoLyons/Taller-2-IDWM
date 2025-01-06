@@ -1,0 +1,219 @@
+main {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    height: calc(100vh - 100px); /* Altura de la página menos el tamaño del navbar (ajústalo según tu diseño) */
+  }
+  
+  .productos-lista {
+    flex: 3;
+    max-height: 100%; /* Ajusta la altura al tamaño del contenedor padre */
+    overflow-y: auto; /* Barra de desplazamiento vertical si es necesario */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .productos-lista ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .producto {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .producto img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-right: 15px;
+  }
+  
+  .producto-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .producto-info h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .producto-info p {
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  .cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cantidad button {
+    width: 30px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .cantidad button:hover {
+    background-color: #45a049;
+  }
+  
+  .cantidad span {
+    font-size: 16px;
+  }
+  
+  .resumen-compra {
+    flex: 2;
+    height: 100%; /* Ocupa el 100% de la altura del contenedor */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    text-align: center; /* Centra el texto de los elementos internos */
+  }
+  
+  .resumen-compra h3 {
+    margin-bottom: 20px;
+  }
+  
+  .resumen-compra p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .resumen-compra button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top:25px;
+    cursor: pointer;
+  }
+  
+  .resumen-compra button:hover {
+    background-color: #0056b3;
+  }
+  
+  .resumen-compra button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .producto {
+    position: relative; /* Asegura que el botón se posicione relativo al contenedor del producto */
+  }
+  
+  .delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px; /* Asegura que el botón sea redondo */
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute; /* Posiciona el botón dentro del contenedor del producto */
+    bottom: 33px; /* Ubica el botón 10px desde la parte inferior del contenedor */
+    right: 10px; /* Alineado a la derecha con un pequeño margen */
+    border-radius: 50%; /* Hace el botón redondo */
+    width: 40px; /* Define el tamaño del botón */
+    height: 40px; /* Define el tamaño del botón */
+  }
+  
+  .delete-btn i {
+    margin: 0; /* Elimina el margen del ícono */
+  }
+  
+  .delete-btn:hover {
+    background-color: darkred;
+  }
+  
+  .delete-btn:focus {
+    outline: none;
+  }
+  
+  .empty-cart-message {
+    display: flex;
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    height: 200px;            /* Establece una altura para que sea visible el centro */
+    text-align: center;       /* Asegura que el texto esté centrado dentro del div */
+    font-size: 1.5rem;        /* Tamaño de la fuente */
+    border-radius: 8px;       /* Opcional: bordes redondeados */
+  }
+  
+  /* Estilos para los campos de entrada de dirección */
+  .input-fields {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .input-fields label {
+    display: block;
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .input-fields input {
+    width: 60%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Estilos adicionales para el botón "Finalizar compra" */
+  button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .download-btn {
+    margin-top: 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .download-btn:disabled {
+    background-color: #bfbfbf;
+    cursor: not-allowed;
+  }
+
+  .download-btn i {
+    font-size: 18px;
+  }
+
+  .download-btn:hover:not(:disabled) {
+    background-color: #45a049;
+  }

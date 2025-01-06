@@ -1,0 +1,64 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<app-navbar></app-navbar>
+<main>
+  <section class="productos-lista">
+    <!-- Verificar si hay productos en el carrito -->
+    <ul *ngIf="productsCart.length > 0; else emptyCart">
+      <li *ngFor="let productCart of productsCart" class="producto">
+        <img src="{{ productCart.imageUrl }}" alt="{{ productCart.name }}" onerror="this.src='images (1).png'" />
+        <div class="producto-info">
+          <h4>{{ productCart.name }}</h4>
+          <p>{{ productCart.price | currency: 'CLP' }}</p>
+          <div class="cantidad">
+            <button (click)="decreaseQuantity(productCart.id)">-</button>
+            <span>{{ productCart.quantity }}</span>
+            <button (click)="increaseQuantity(productCart.id)">+</button>
+          </div>
+          <!-- Botón para eliminar el producto -->
+          <button class="delete-btn" (click)="removeProduct(productCart.id)">
+            <i class="fa fa-trash"></i> 
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Plantilla alternativa si el carrito está vacío -->
+    <ng-template #emptyCart>
+      <div class="empty-cart-message">
+        <p>El carrito está vacío</p>
+      </div>
+    </ng-template>
+  </section>
+
+  <aside class="resumen-compra">
+    <h3>Resumen de compra</h3>
+    <p>Total: {{ totalPrice | currency: 'CLP' }}</p>
+
+    <!-- Campos para ingresar datos -->
+    <div class="input-fields">
+      <label for="pais">País</label>
+      <input type="text" id="pais" [(ngModel)]="pais" />
+
+      <label for="ciudad">Ciudad</label>
+      <input type="text" id="ciudad" [(ngModel)]="ciudad" />
+
+      <label for="comuna">Comuna</label>
+      <input type="text" id="comuna" [(ngModel)]="comuna" />
+
+      <label for="calle">Calle</label>
+      <input type="text" id="calle" [(ngModel)]="calle" />
+    </div>
+
+    <!-- Botón para finalizar compra, habilitado solo si todos los campos están completados -->
+    <button [disabled]="!isFormValid()" (click)="finalizePurchase(pais, ciudad, comuna, calle)">Finalizar compra</button>
+
+    <!-- Botón para descargar comprobante -->
+    <button
+      class="download-btn"
+      [disabled]="!descargaFinalizada"
+      (click)="descargarComprobante()"
+    >
+      <i class="fa fa-download"></i> Descargar comprobante
+    </button>
+  </aside>
+</main>
