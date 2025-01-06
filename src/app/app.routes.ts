@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+    },
+    {
         path: 'home',
         pathMatch: 'full',
         loadComponent: () => import('./e-commerce/pages/view-products/view-products.component').then( m => m.ViewProductsComponent)
@@ -10,6 +15,11 @@ export const routes: Routes = [
         path: 'iniciarSesion',
         pathMatch: 'full',
         loadComponent: () => import('./e-commerce/pages/loggin/loggin.component').then( m => m.LogginComponent)
+    },
+    {
+        path: 'register',
+        pathMatch: 'full',
+        loadComponent: () => import('./e-commerce/pages/register/register.component').then( m => m.RegisterComponent)
     },
     {
         path: 'cart',

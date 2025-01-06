@@ -1,79 +1,34 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { LogginDto, Auth } from '../interfaces/ResponseApi_auth'; 
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { RegisterDto } from '../interfaces/ResponsiveApi_register';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private baseUrl: string = "http://localhost:5225/api/Auth";
-
-  private http = inject(HttpClient);
-
+  private readonly baseUrl: string = "http://localhost:5225/api/Auth";
+  private readonly http = inject(HttpClient);
   public errors: string[] = []; 
-
-  private currentAuthSubject = new BehaviorSubject<Auth | null>(null);
-  public currentAuth$ = this.currentAuthSubject.asObservable();
-
-  constructor() {
-    this.initializeAuth();
-  }
 
   loggin(credentials: LogginDto): Observable<Auth> {
     return this.http.post<Auth>(`${this.baseUrl}/login`, credentials).pipe(
-      map((auth) => {
-        this.handleSuccessfulAuth(auth);
-        console.log(auth);
-        return auth;
-      })
+      catchError((error: HttpErrorResponse) => {
+        console.log('Error on login',error);
+        this.errors.push(error.message || 'Error desconocido');
+        return throwError(() => new Error('Error on login'));
+    })
     );
   }
-
-  logout(): void {
-    localStorage.removeItem('auth');
-    this.clearAuthState();
+  register(credentials: RegisterDto): Observable<Auth> {
+    return this.http.post<Auth>(`${this.baseUrl}/register`, credentials).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.log('Error on register',error);
+        this.errors.push(error.message || 'Unknow error');
+        return throwError(() => new Error('Error on register'));
+    })
+    );
   }
-
-  getCurrentAuth(): Auth | null {
-    return this.currentAuthSubject.value;
-  }
-
-  setCurrentAuth(auth: Auth): void {
-    localStorage.setItem('auth', JSON.stringify(auth));
-    this.currentAuthSubject.next(auth);
-  }
-
-  isAuthInitialized(): boolean {
-    return this.currentAuthSubject.value !== null;
-  }
-
-  isAuthenticated(): boolean {
-    return this.currentAuthSubject.value !== null;
-  }
-
-  // Private methods
-  private initializeAuth(): void {
-    const item = localStorage.getItem('auth');
-    if (!item) return;
-
-    try {
-      const storedAuth: Auth = JSON.parse(item);
-      if (storedAuth) {
-        this.handleSuccessfulAuth(storedAuth);
-      }
-    } catch (error) {
-      console.error(`Error parsing stored item for 'auth':`, error);
-    }
-  }
-
-  private handleSuccessfulAuth(auth: Auth): void {
-    localStorage.setItem('auth', JSON.stringify(auth));
-    this.currentAuthSubject.next(auth);
-  }
-
-  private clearAuthState(): void {
-    this.currentAuthSubject.next(null);
-  }
+ 
 }

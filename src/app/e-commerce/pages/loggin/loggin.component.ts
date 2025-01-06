@@ -11,21 +11,21 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service'; 
 import { LogginDto } from '../../interfaces/ResponseApi_auth'; 
-import { finalize } from 'rxjs';
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { LocalStorageService } from '../../services/local-storage-service.service';
 
 @Component({
   selector: 'app-loggin',
-  templateUrl: './loggin.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, HttpClientModule ],
-  providers: [AuthService],
+  imports: [ReactiveFormsModule, CommonModule],
+  providers: [AuthService, LocalStorageService],
+  templateUrl: './loggin.component.html',
   styleUrl: './loggin.component.css'
 })
 export class LogginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly localStorageService = inject(LocalStorageService);
   private readonly router = inject(Router);
 
   protected readonly loginForm: FormGroup = this.fb.group({
@@ -54,25 +54,37 @@ export class LogginComponent {
     };
 
     this.loading = true;
-
-    this.authService
-      .loggin(loginData)
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe({
-        next: (response) => { 
-          const roles = Array.isArray(response.roles) ? response.roles : [response.roles];
-          console.log(roles);
-        
-          if (roles.includes("Admin")) {
-            this.router.navigate(['view-products-admin']);
-          } else {
-            this.router.navigate(['home']);
-            console.log('Logged in successfully');
+    
+    this.authService.loggin(loginData).subscribe({
+      next: (response) => {
+        if (response) {
+          if (response.token) {
+            this.localStorageService.setVariable('token', response.token);
+            this.localStorageService.setVariable('user', JSON.stringify(response));
+            const roles = Array.isArray(response.roles) ? response.roles : [response.roles];
+            console.log(roles);
+          
+            if (roles.includes("Admin")) {
+              this.navigate('view-products-admin');
+            } else {
+              this.navigate('home');
+              console.log('Logged in successfully');
+            }
+            this.loading = false;
+            
           }
-        },
-        error: (error: HttpErrorResponse) =>
-          console.error('Error logging in:', error),
-      });
+        } else {
+          this.loading = false;
+          console.log('Error on login', response);
+
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        let e = this.authService.errors;
+        console.log('Error', e);
+      },
+    });
   }
 
   private alphanumericValidator(): ValidatorFn {
@@ -83,7 +95,9 @@ export class LogginComponent {
       return regex.test(control.value) ? null : { alphanumeric: true };
     };
   }
-
+  navigate(route: string) {
+    this.router.navigate([route]);
+  }
   protected getFieldError(fieldName: keyof LogginDto): string {
     const control = this.loginForm.get(fieldName);
 
