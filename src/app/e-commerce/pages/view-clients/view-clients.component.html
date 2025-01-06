@@ -1,0 +1,66 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda IDWM</title>
+  </head>
+  <body>
+    <app-navbar>        
+        <app-search-bar (notifyParent)="setSearch($event)"></app-search-bar>
+        <div *ngIf="showMessage" class="message-box">
+            {{ message }}
+        </div>
+    
+        <div class="header-buttons">
+            <!-- Saludo y botones dinámicos basados en autenticación -->
+            <div *ngIf="isAuthenticated; else notAuthenticated">
+                <button class="btn-editar-perfil" (click)="navigateTo('editProfile')">Editar perfil</button>
+                <button class="btn-cerrar-sesion" (click)="logout()">Cerrar sesión</button>
+            </div>
+            <ng-template #notAuthenticated>
+                <button class="btn-iniciar-sesion" (click)="navigateTo('iniciarSesion')">Iniciar sesión</button>
+            </ng-template>
+  
+            <a href="viewReceipts"><button style="color:black">Ver Ventas</button></a>
+            <a href="viewClients"><button style="color:black">Ver Clientes</button></a>
+        </div>
+    </app-navbar>
+  
+    <main>
+       
+  
+        <section class="productos">
+            <div *ngIf="isAuthenticated; else notAuthenticated" class="user-greeting-container">
+              <p class="user-greeting">Hola {{ userName }}</p>
+            </div>
+            <div *ngIf="products.length === 0">
+                <p>No hay productos disponibles</p>
+            </div>
+        
+            <div class="productos-grid">
+                <div *ngFor="let producto of products" class="producto">
+                  <p>{{ producto.name }}</p>
+                  <p>{{ producto.birthdate.toString() }}</p>
+                  <p>{{ producto.rut }}</p>
+                  <p>{{ producto.mail  }}</p>
+                  <p>{{ producto.gender  }}</p>
+              
+                  <button class="boton-Habilitar" (click)="deshabilitarCliente(producto.id)">
+                    Habilitar
+                  </button>
+                  <button class="boton-Deshabilitar" (click)="habilitarCliente(producto.id)">
+                    Deshabilitar
+                  </button>
+                </div>
+            </div>
+        
+            <app-change-page-buttons 
+                (notifyParent)="setNewPage($event)" 
+                [maxPage]="maxPage" 
+                [buttonNextDisabled]="buttonNextDisabled" 
+                [buttonPreviousDisabled]="buttonPreviousDisabled">
+            </app-change-page-buttons>
+        </section>
+    </main>
+  </body>
+  

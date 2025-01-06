@@ -20,3 +20,12 @@ export interface updateProfile {
     newPassword:     string;
     confirmPassword: string;
 }
+export interface ResponseGetAllUsers {
+    message:      string;
+    totalRecords: number;
+    totalPages:   number;
+    currentPage:  number;
+    pageSize:     number;
+    users:        InfoUserDto[];
+}
+
