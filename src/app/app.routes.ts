@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-
+import { authGuard } from './e-commerce/guard/auth.guard'; 
 export const routes: Routes = [
     {
         path: '',
@@ -29,22 +29,26 @@ export const routes: Routes = [
     {
         path: 'view-products-admin',
         pathMatch: 'full',
-        loadComponent: () => import('./e-commerce/pages/view-products-admin/view-products-admin.component').then( m => m.ViewProductsAdminComponent)
+        loadComponent: () => import('./e-commerce/pages/view-products-admin/view-products-admin.component').then( m => m.ViewProductsAdminComponent),
+        canActivate: [authGuard]
     },
     {
         path: 'editProfile',
         pathMatch: 'full',
-        loadComponent: () => import('./e-commerce/pages/edit-profile/edit-profile.component').then( m => m.EditProfileComponent)
+        loadComponent: () => import('./e-commerce/pages/edit-profile/edit-profile.component').then( m => m.EditProfileComponent),
+        canActivate: [authGuard]
     },
     {
         path: 'viewReceipts',
         pathMatch: 'full',
-        loadComponent: () => import('./e-commerce/pages/view-receipts/view-receipts.component').then( m => m.ViewReceiptsComponent)
+        loadComponent: () => import('./e-commerce/pages/view-receipts/view-receipts.component').then( m => m.ViewReceiptsComponent),
+        canActivate: [authGuard]
     },
     {
         path: 'viewClients',
         pathMatch: 'full',
-        loadComponent: () => import('./e-commerce/pages/view-clients/view-clients.component').then( m => m.ViewClientsComponent)
+        loadComponent: () => import('./e-commerce/pages/view-clients/view-clients.component').then( m => m.ViewClientsComponent),
+        canActivate: [authGuard]
     },
 
     {
